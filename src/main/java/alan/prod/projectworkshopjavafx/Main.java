@@ -9,13 +9,15 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage){
        try{
-           FXMLLoader loader = new FXMLLoader(getClass().getResource("gui/MainView.fxml"));
-           ScrollPane scrollPane = loader.load();
+           URL arquivo = getClass().getResource("gui/MainView.fxml");
+           //FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+           ScrollPane scrollPane = FXMLLoader.load(arquivo);
 
            scrollPane.setFitToHeight(true);
            scrollPane.setFitToWidth(true);
@@ -27,7 +29,7 @@ public class Main extends Application {
            stage.getIcons().add(i);
            stage.show();
        } catch (IOException e){
-           e.printStackTrace();
+           System.out.println(e.getMessage());;
        }
     }
 

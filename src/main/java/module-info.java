@@ -5,4 +5,6 @@ module alan.prod.projectworkshopjavafx {
 
     opens alan.prod.projectworkshopjavafx to javafx.fxml;
     exports alan.prod.projectworkshopjavafx;
+    exports alan.prod.projectworkshopjavafx.gui;
+    opens alan.prod.projectworkshopjavafx.gui to javafx.fxml;
 }
