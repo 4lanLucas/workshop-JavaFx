@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                alan.prod.projectworkshopjavafx/alan.prod.projectworkshopjavafx.HelloApplication
+                                alan.prod.projectworkshopjavafx/alan.prod.projectworkshopjavafx.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
