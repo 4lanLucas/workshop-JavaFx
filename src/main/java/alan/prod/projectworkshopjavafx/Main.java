@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class Main extends Application {
+    private static Scene mainScene;
+
     @Override
     public void start(Stage stage){
        try{
@@ -22,7 +24,7 @@ public class Main extends Application {
            scrollPane.setFitToHeight(true);
            scrollPane.setFitToWidth(true);
 
-           Scene mainScene = new Scene(scrollPane);
+           mainScene = new Scene(scrollPane);
            stage.setScene(mainScene);
            stage.setTitle("Sample JavaFx application");
            Image i = new Image(getClass().getResourceAsStream("imgs/javaIcon.png"));
@@ -31,6 +33,10 @@ public class Main extends Application {
        } catch (IOException e){
            System.out.println(e.getMessage());;
        }
+    }
+
+    public static Scene getMainScene(){
+        return mainScene;
     }
 
     public static void main(String[] args) {
