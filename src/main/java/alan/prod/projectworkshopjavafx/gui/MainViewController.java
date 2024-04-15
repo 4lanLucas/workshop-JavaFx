@@ -2,6 +2,7 @@ package alan.prod.projectworkshopjavafx.gui;
 
 import alan.prod.projectworkshopjavafx.Main;
 import alan.prod.projectworkshopjavafx.gui.util.Alerts;
+import alan.prod.projectworkshopjavafx.models.services.DepartmentService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 public class MainViewController implements Initializable {
     @FXML
@@ -31,10 +33,14 @@ public class MainViewController implements Initializable {
     }
     @FXML
     public void onMenuItemDepartment(){
-        loadView("DepartmentList.fxml");
+        loadView("DepartmentList.fxml", (DepartmentListController controller) ->{
+            controller.setDepartmentService(new DepartmentService());
+            controller.updateTableView();
+        });
+
     }@FXML
     public void onMenuItemAbout(){
-        loadView("About.fxml");
+        loadView("About.fxml", x -> {});
     }
 
 
@@ -43,7 +49,7 @@ public class MainViewController implements Initializable {
 
     }
 
-    private synchronized void loadView(String absoluteName){
+    private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
             VBox newVBox = loader.load();
@@ -55,9 +61,13 @@ public class MainViewController implements Initializable {
             mainVBox.getChildren().clear();
             mainVBox.getChildren().add(mainMenu);
             mainVBox.getChildren().addAll(newVBox.getChildren());
+
+            T controller = loader.getController();
+            initializingAction.accept(controller);
         } catch (IOException e){
             Alerts.showAlert("IOException",null,e.getMessage(), Alert.AlertType.ERROR);
         }
 
     }
+
 }
