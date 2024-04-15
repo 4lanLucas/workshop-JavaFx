@@ -1,8 +1,8 @@
 package alan.prod.projectworkshopjavafx.gui;
 
 import alan.prod.projectworkshopjavafx.Main;
-import alan.prod.projectworkshopjavafx.models.entities.Department;
-import alan.prod.projectworkshopjavafx.models.services.DepartmentService;
+import alan.prod.projectworkshopjavafx.model.entities.Department;
+import alan.prod.projectworkshopjavafx.model.services.DepartmentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

@@ -2,7 +2,7 @@ package alan.prod.projectworkshopjavafx.gui;
 
 import alan.prod.projectworkshopjavafx.Main;
 import alan.prod.projectworkshopjavafx.gui.util.Alerts;
-import alan.prod.projectworkshopjavafx.models.services.DepartmentService;
+import alan.prod.projectworkshopjavafx.model.services.DepartmentService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +13,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
