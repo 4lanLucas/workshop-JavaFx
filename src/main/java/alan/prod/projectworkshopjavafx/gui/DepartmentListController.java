@@ -1,6 +1,7 @@
 package alan.prod.projectworkshopjavafx.gui;
 
 import alan.prod.projectworkshopjavafx.Main;
+import alan.prod.projectworkshopjavafx.gui.listeners.DataChangeListener;
 import alan.prod.projectworkshopjavafx.gui.util.Alerts;
 import alan.prod.projectworkshopjavafx.gui.util.Utils;
 import alan.prod.projectworkshopjavafx.model.entities.Department;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class DepartmentListController implements Initializable {
+public class DepartmentListController implements Initializable, DataChangeListener {
     private DepartmentService service;
 
     @FXML
@@ -82,6 +83,7 @@ public class DepartmentListController implements Initializable {
             controller.setDepartment(obj);
             controller.setDepartmentService(new DepartmentService());
             controller.updateFormData();
+            controller.subscribeDataChangeListener(this);
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Enter Department data");
@@ -94,5 +96,10 @@ public class DepartmentListController implements Initializable {
         } catch (IOException e){
             Alerts.showAlert("IOException",null, e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        updateTableView();
     }
 }

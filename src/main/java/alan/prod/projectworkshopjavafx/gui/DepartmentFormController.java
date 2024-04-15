@@ -1,6 +1,7 @@
 package alan.prod.projectworkshopjavafx.gui;
 
 import alan.prod.projectworkshopjavafx.db.DbException;
+import alan.prod.projectworkshopjavafx.gui.listeners.DataChangeListener;
 import alan.prod.projectworkshopjavafx.gui.util.Alerts;
 import alan.prod.projectworkshopjavafx.gui.util.Constraints;
 import alan.prod.projectworkshopjavafx.gui.util.Utils;
@@ -15,11 +16,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DepartmentFormController implements Initializable {
     private Department entity;
     private DepartmentService service;
+    private List<DataChangeListener> dataChangeListenerListeners = new ArrayList<>();
     @FXML
     private TextField txtId;
     @FXML
@@ -40,6 +44,10 @@ public class DepartmentFormController implements Initializable {
         this.service = service;
     }
 
+    public void subscribeDataChangeListener(DataChangeListener listener) {
+        dataChangeListenerListeners.add(listener);
+    }
+
     @FXML
     public void onBtSaveAction(ActionEvent event) {
         if(entity == null){
@@ -51,9 +59,16 @@ public class DepartmentFormController implements Initializable {
         try{
             entity = getFormData();
             service.saveOrUpdate(entity);
+            notifyDataChangeListeners();
             Utils.currentStage(event).close();
         } catch(DbException e){
             Alerts.showAlert("Error saving object", null, e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private void notifyDataChangeListeners() {
+        for(DataChangeListener listener : dataChangeListenerListeners){
+            listener.onDataChanged();
         }
     }
 
