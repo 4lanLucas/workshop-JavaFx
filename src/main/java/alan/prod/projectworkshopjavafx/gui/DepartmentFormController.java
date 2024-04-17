@@ -6,6 +6,7 @@ import alan.prod.projectworkshopjavafx.gui.util.Alerts;
 import alan.prod.projectworkshopjavafx.gui.util.Constraints;
 import alan.prod.projectworkshopjavafx.gui.util.Utils;
 import alan.prod.projectworkshopjavafx.model.entities.Department;
+import alan.prod.projectworkshopjavafx.model.exceptions.ValidationException;
 import alan.prod.projectworkshopjavafx.model.services.DepartmentService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class DepartmentFormController implements Initializable {
     private Department entity;
@@ -30,6 +29,7 @@ public class DepartmentFormController implements Initializable {
     private TextField txtName;
     @FXML
     private Label labelErrorId;
+    @FXML
     private Label labelErrorName;
     @FXML
     private Button btSave;
@@ -63,6 +63,8 @@ public class DepartmentFormController implements Initializable {
             Utils.currentStage(event).close();
         } catch(DbException e){
             Alerts.showAlert("Error saving object", null, e.getMessage(), Alert.AlertType.ERROR);
+        } catch(ValidationException e){
+            setErrorMessage(e.getErrors());
         }
     }
 
@@ -73,9 +75,16 @@ public class DepartmentFormController implements Initializable {
     }
 
     private Department getFormData() {
+        ValidationException exception = new ValidationException("Validation error");
         Department obj = new Department();
         obj.setId(Utils.tryParseToInt(txtId.getText()));
+        if (txtName.getText() == null || txtName.getText().trim().equals("")){
+            exception.addError("name","field cant be empty");
+        }
         obj.setName(txtName.getText());
+        if(!exception.getErrors().isEmpty()){
+            throw exception;
+        }
         return obj;
     }
 
@@ -98,5 +107,11 @@ public class DepartmentFormController implements Initializable {
         }
         txtId.setText(String.valueOf(entity.getId()));
         txtName.setText(entity.getName());
+    }
+    private void setErrorMessage(Map<String,String> errors){
+        Set<String> fields = errors.keySet();
+        if(fields.contains("name")){
+            labelErrorName.setText(errors.get("name"));
+        }
     }
 }

@@ -12,6 +12,7 @@ module alan.prod.projectworkshopjavafx {
     opens alan.prod.projectworkshopjavafx.model.entities to javafx.fxml;
     exports alan.prod.projectworkshopjavafx.model.entities;
     exports alan.prod.projectworkshopjavafx.model.services;
+    exports alan.prod.projectworkshopjavafx.model.exceptions;
     exports alan.prod.projectworkshopjavafx.model.dao;
     exports alan.prod.projectworkshopjavafx.db;
 
