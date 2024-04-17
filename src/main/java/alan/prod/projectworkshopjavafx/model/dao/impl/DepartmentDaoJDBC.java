@@ -4,6 +4,7 @@ package alan.prod.projectworkshopjavafx.model.dao.impl;
 
 import alan.prod.projectworkshopjavafx.db.DB;
 import alan.prod.projectworkshopjavafx.db.DbException;
+import alan.prod.projectworkshopjavafx.db.DbIntegrityException;
 import alan.prod.projectworkshopjavafx.model.dao.DepartmentDao;
 import alan.prod.projectworkshopjavafx.model.entities.Department;
 
